@@ -1,10 +1,13 @@
 import React from 'react'
 import { AppRouter } from './routes/AppRouter'
+import { AuthProvider } from './auth'
 
 export const HeroresApp = () => {
   return (
     <>
-      <AppRouter />
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
     </>
   )
 }
