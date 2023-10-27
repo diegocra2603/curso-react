@@ -1,4 +1,6 @@
-import { Grid, TextField, Typography } from "@mui/material"
+import { Link as RouterLink } from "react-router-dom"
+import { Google } from "@mui/icons-material"
+import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 
 export const LoginPage = () => {
   return (
@@ -15,26 +17,47 @@ export const LoginPage = () => {
       }}
     >
 
-      <Grid item className="box-shadow" xs={3} sx={{ backgroundColor: 'white', padding: 3, borderRadius: 2 }}>
-        <Typography variant="h5" sx={{ mb: 1 }} >Login</Typography>
+      <Grid item className="box-shadow" sx={{ backgroundColor: 'white', padding: 3, borderRadius: 2 }}>
+        <Typography variant="h4" >Login</Typography>
         <form>
-          <Grid container gap={1} direction="column">
-            <Grid item>
+          <Grid container gap={1} >
+            <Grid item xs={12}>
               <TextField
-                label="Correo"
+                label="Email"
                 type="email"
-                placeholder="correo@google.com"
+                placeholder="email@google.com"
                 fullWidth
               />
             </Grid>
 
-            <Grid item>
+            <Grid item xs={12}>
               <TextField
-                label="Contrase;a"
+                label="Password"
                 type="password"
                 placeholder="Password"
                 fullWidth
               />
+            </Grid>
+
+            <Grid container spacing={2} >
+              <Grid item xs={12} sm={6}>
+                <Button variant="contained" fullWidth>
+                  Login
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button variant="contained" fullWidth>
+                  <Google />
+                  <Typography sx={{ ml: 1 }}>Google</Typography>
+                </Button>
+              </Grid>
+            </Grid>
+
+            <Grid container direction="row" justifyContent="end">
+              <Link component={RouterLink} color="inherit" to="/auth/register">
+                Crear una cuenta
+              </Link>
+
             </Grid>
 
           </Grid>
