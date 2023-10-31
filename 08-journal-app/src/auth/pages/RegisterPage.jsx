@@ -2,11 +2,12 @@ import { Link as RouterLink } from "react-router-dom"
 import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../../hooks"
+import { useState } from "react"
 
 const formData = {
   displayName: 'Diego Cruz',
   email: 'diego@gmail.com',
-  password: '12345'
+  password: '123456'
 }
 
 const formValidations = {
@@ -17,6 +18,8 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const [formSubmited, setFormSubmited] = useState(false)
+
   const { formState, onInputChange, onResetForm, isFormValid, formValidation } = useForm(formData, formValidations)
 
   const { displayName, email, password } = formState
@@ -25,11 +28,13 @@ export const RegisterPage = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
+    setFormSubmited(true)
     console.log(formState)
   }
 
   return (
     <AuthLayout title="Register">
+      <h1>FormValid {isFormValid ? 'Es Valido' : 'Es Invalido'}</h1>
       <form onSubmit={onSubmit} >
         <Grid container gap={1} >
 
@@ -42,8 +47,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               value={displayName}
               fullWidth
-              // error={!displayNameValid?.isValid}
-              // helperText={displayNameValid?.errorMessage}
+              error={!!displayNameValid && formSubmited}
+              helperText={displayNameValid && formSubmited}
             />
           </Grid>
 
@@ -56,6 +61,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               value={email}
               fullWidth
+              error={!!emailValid && formSubmited}
+              helperText={emailValid && formSubmited}
             />
           </Grid>
 
@@ -68,6 +75,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               value={password}
               fullWidth
+              error={!!passwordValid && formSubmited}
+              helperText={passwordValid && formSubmited}
             />
           </Grid>
 
