@@ -1,4 +1,4 @@
-import { loginWithEmailAndPassword, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
 import { checkingCredentials, login, logout } from "./"
 
 export const checkingAuthentication = ({ email, password }) => {
@@ -40,12 +40,20 @@ export const startLoginUserWithEmailPassword = ({ email, password }) => {
 
         dispatch(checkingCredentials())
 
-        const result = await loginWithEmailAndPassword({email, password})
+        const result = await loginWithEmailAndPassword({ email, password })
 
         if (!result.ok) {
             return dispatch(logout({ errorMessage: result.errorMessage }))
         }
 
         dispatch(login(result))
+    }
+}
+
+export const startLogout = () => {
+    return async (dispatch) => {
+        await logoutFirebase()
+
+        dispatch(logout({errorMessage: 'Se ha cerrado sesion'}))
     }
 }
