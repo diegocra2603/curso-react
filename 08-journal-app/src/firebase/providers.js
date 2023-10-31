@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider()
@@ -7,7 +7,6 @@ export const singInWithGoogle = async () => {
     try {
         const result = await signInWithPopup(FirebaseAuth, googleProvider)
         // const credentials = GoogleAuthProvider.credentialFromResult(result)
-        const user = result.user
         const { displayName, email, photoURL, uid } = result.user
 
         return {
@@ -16,16 +15,10 @@ export const singInWithGoogle = async () => {
         }
 
     } catch (error) {
-
-        const errorCode = error.errorCode
-        const errorMessage = error.message
-
         return {
             ok: false,
-            errorMessage
+            errorMessage : error.message
         }
-
-
     }
 }
 
@@ -39,7 +32,7 @@ export const registerUserWithEmailPassword = async ({ email, password, displayNa
         })
 
         return {
-            ok : true,
+            ok: true,
             errorMessage: null,
             uid, photoURL, email, displayName
         }
@@ -47,9 +40,28 @@ export const registerUserWithEmailPassword = async ({ email, password, displayNa
     } catch (error) {
         return {
             ok: false,
-            errorMessage: error.message,
-            uid : null, 
-            photoURL : null
+            errorMessage: error.message
+        }
+    }
+}
+
+export const loginWithEmailAndPassword = async ({ email, password }) => {
+    try {
+
+        const result = await signInWithEmailAndPassword(FirebaseAuth, email, password)
+
+        return {
+            ok: true,
+            displayName: result.user.displayName,
+            email: result.user.email,
+            photoURL: result.user.photoURL,
+            uid: result.user.uid
+        }
+
+    } catch (error) {
+        return {
+            ok: false,
+            errorMessage: error.message
         }
     }
 }
