@@ -3,6 +3,8 @@ import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../../hooks"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { startCreatingUserWithEmailPassword } from "../../store/auth"
 
 const formData = {
   displayName: 'Diego Cruz',
@@ -18,6 +20,8 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const dispatch  = useDispatch()
+
   const [formSubmited, setFormSubmited] = useState(false)
 
   const { formState, onInputChange, onResetForm, isFormValid, formValidation } = useForm(formData, formValidations)
@@ -27,9 +31,11 @@ export const RegisterPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-
     setFormSubmited(true)
-    console.log(formState)
+
+    if(!isFormValid) return
+
+    dispatch(startCreatingUserWithEmailPassword(formState))
   }
 
   return (
@@ -48,7 +54,7 @@ export const RegisterPage = () => {
               value={displayName}
               fullWidth
               error={!!displayNameValid && formSubmited}
-              helperText={displayNameValid && formSubmited}
+              helperText={displayNameValid}
             />
           </Grid>
 
@@ -62,7 +68,7 @@ export const RegisterPage = () => {
               value={email}
               fullWidth
               error={!!emailValid && formSubmited}
-              helperText={emailValid && formSubmited}
+              helperText={emailValid}
             />
           </Grid>
 
@@ -76,7 +82,7 @@ export const RegisterPage = () => {
               value={password}
               fullWidth
               error={!!passwordValid && formSubmited}
-              helperText={passwordValid && formSubmited}
+              helperText={passwordValid}
             />
           </Grid>
 

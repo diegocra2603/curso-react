@@ -30,7 +30,7 @@ export const LoginPage = () => {
   }
 
   const onGoogleSignIn = () => {
-    dispatch(startGoogleSignIn(formState))
+    dispatch(startGoogleSignIn())
   }
 
   return (
