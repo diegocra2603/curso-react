@@ -13,7 +13,7 @@ export const startGoogleSignIn = () => {
         const result = await singInWithGoogle()
 
         if (!result.ok) {
-            return dispatch(logout(result.errorMessage))
+            return dispatch(logout({ errorMessage: result.errorMessage }))
         }
 
         dispatch(login(result))
@@ -25,8 +25,12 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
     return async (dispatch) => {
         dispatch(checkingCredentials())
 
-        const result = await registerUserWithEmailPassword({email, password, displayName})
+        const result = await registerUserWithEmailPassword({ email, password, displayName })
 
-        console.log(result)
+        if (!result.ok) {
+            return dispatch(logout({ errorMessage: result.errorMessage }))
+        }
+
+        dispatch(login(result))
     }
 }
