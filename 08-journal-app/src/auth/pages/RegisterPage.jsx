@@ -17,10 +17,10 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
-  const { formState, onInputChange, onResetForm, isFormValid, formStateValid } = useForm(formData, formValidations)
+  const { formState, onInputChange, onResetForm, isFormValid, formValidation } = useForm(formData, formValidations)
 
   const { displayName, email, password } = formState
-  // const { displayNameValid, emailValid, passwordValid } = formStateValid
+  const { displayNameValid, emailValid, passwordValid } = formValidation
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -42,8 +42,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               value={displayName}
               fullWidth
-              error={false}
-              helperText={null}
+              // error={!displayNameValid?.isValid}
+              // helperText={displayNameValid?.errorMessage}
             />
           </Grid>
 
