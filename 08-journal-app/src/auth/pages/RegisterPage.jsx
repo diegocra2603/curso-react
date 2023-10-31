@@ -9,11 +9,18 @@ const formData = {
   password: '12345'
 }
 
+const formValidations = {
+  email: [(value) => value.includes('@'), 'El correo debe de tener una @'],
+  password: [(value) => value.length >= 6, 'La contraseña debe de tener más de 6 letras'],
+  displayName: [(value) => value.length >= 1, 'El nombre es obligatorio'],
+}
+
 export const RegisterPage = () => {
 
-  const { formState, onInputChange, onResetForm } = useForm(formData)
+  const { formState, onInputChange, onResetForm, isFormValid, formStateValid } = useForm(formData, formValidations)
 
-  const { name: displayName, email, password } = formState
+  const { displayName, email, password } = formState
+  // const { displayNameValid, emailValid, passwordValid } = formStateValid
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -35,6 +42,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               value={displayName}
               fullWidth
+              error={false}
+              helperText={null}
             />
           </Grid>
 
