@@ -14,7 +14,7 @@ export const useCheckAuth = () => {
         onAuthStateChanged(FirebaseAuth, async (user) => {
 
             if (!user) {
-                dispatch(logout({ errorMessage: 'Usuario no autenticado' }))
+                dispatch(logout())
                 return;
             }
 

@@ -54,6 +54,6 @@ export const startLogout = () => {
     return async (dispatch) => {
         await logoutFirebase()
 
-        dispatch(logout({errorMessage: 'Se ha cerrado sesion'}))
+        dispatch(logout())
     }
 }
