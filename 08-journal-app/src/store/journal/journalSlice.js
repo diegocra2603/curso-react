@@ -17,23 +17,25 @@ export const journalSlice = createSlice({
     },
     reducers: {
         isCreatingNewNote: (state) => {
-            state.isSaving = true
+            state.isSaving = true;
         },
         addNewEmptyNote: (state, action) => {
-            state.notes.push(action.payload)
-            state.isSaving = false
+            state.notes.push(action.payload);
+            state.isSaving = false;
         },
         setActiveNote: (state, action) => {
-            state.active = action.payload
+            state.active = action.payload;
         },
         setNotes: (state, action) => {
-            state.notes = action.payload
+            state.notes = action.payload;
         },
         setSaving: (state) => {
-
+            state.isSaving = true;
         },
         updateNote: (state, action) => {
-
+            const index = state.notes.findIndex(note => note.id === action.payload.id)
+            state.notes[index] = action.payload;
+            state.isSaving = false;
         },
         deleteNoteById: (state, action) => {
 
