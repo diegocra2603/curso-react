@@ -55,7 +55,6 @@ export const startSaveNote = () => {
         await setDoc(docRef, noteToFireStore, { merge: true })
     
         dispatch(updateNote(note))
-        dispatch(setActiveNote(null))
 
     }
 }
