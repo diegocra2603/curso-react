@@ -1,8 +1,23 @@
 import { SaveOutlined } from "@mui/icons-material"
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { ImageGallery } from "../components"
+import { useForm } from "../../hooks"
+import { useSelector } from "react-redux"
+import { useMemo } from "react"
 
 export const NoteView = () => {
+
+    const { active: note } = useSelector(state => state.journal);
+
+    const { formState, onInputChange, onResetForm } = useForm(note);
+
+    const { body, title, date, imageUrls } = formState;
+
+    const dateString = useMemo(() => {
+        const newDate = new Date(date);
+        return newDate.toUTCString();
+    }, [date]);
+
     return (
         <Grid
             className="animate__animated animate__fadeIn animate__faster"
@@ -14,7 +29,7 @@ export const NoteView = () => {
         >
 
             <Grid item>
-                <Typography fontSize={39}>28 de agosto de 2023</Typography>
+                <Typography fontSize={39}>{dateString}</Typography>
             </Grid>
 
             <Grid item>
@@ -25,23 +40,29 @@ export const NoteView = () => {
             </Grid>
 
             <Grid container>
-                <TextField 
-                type="text"
-                variant="filled"
-                fullWidth
-                placeholder="Ingres un título"
-                label="Título"
+                <TextField
+                    type="text"
+                    variant="filled"
+                    fullWidth
+                    placeholder="Ingres un título"
+                    label="Título"
+                    name="title"
+                    onChange={onInputChange}
+                    value={title}
                 />
             </Grid>
 
             <Grid container>
-                <TextField 
-                type="text"
-                variant="filled"
-                fullWidth
-                multiline
-                placeholder="¿Qué sucedió en el día de hoy?"
-                minRows={ 5 }
+                <TextField
+                    type="text"
+                    variant="filled"
+                    fullWidth
+                    multiline
+                    placeholder="¿Qué sucedió en el día de hoy?"
+                    minRows={5}
+                    name="body"
+                    onChange={onInputChange}
+                    value={body}
                 />
             </Grid>
 
