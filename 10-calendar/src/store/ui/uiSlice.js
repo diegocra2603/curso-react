@@ -17,4 +17,4 @@ export const uiSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { handlerOpenDateModal } = uiSlice.actions;
+export const { handlerOpenDateModal, handlerCloseDateModal } = uiSlice.actions;
