@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addHours } from "date-fns";
+import { addHours, differenceInSeconds } from "date-fns";
 import Modal from "react-modal";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -32,22 +32,45 @@ export const CalendarModal = () => {
     });
 
     const handlerCloseModal = () => {
-        console.log('Cerrando Modal')
-        setIsOpen(false)
+        console.log('Cerrando Modal');
+        setIsOpen(false);
     }
 
     const handlerChange = ({ target }) => {
         setFormValues({
             ...formValues,
             [target.name]: target.value
-        })
+        });
     }
 
     const handlerChangeDate = (e, changin) => {
         setFormValues({
             ...formValues,
             [changin]: e
-        })
+        });
+    }
+
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+
+        const difference = differenceInSeconds(formValues.end, formValues.start);
+
+        if (isNaN(difference) || difference <= 0 ) {
+            console.log('Error en fechas');
+            return;
+        }
+
+        if(formValues.titulo.length === 0)
+        {
+            console.log('Titulo Obligatorio');
+            return;
+        }
+
+        console.log(formValues);
+
+        //TODO:
+        
+
     }
 
     return (
@@ -61,7 +84,7 @@ export const CalendarModal = () => {
         >
             <h1> Nuevo evento </h1>
             <hr />
-            <form className="container d-flex flex-column gap-2">
+            <form className="container d-flex flex-column gap-2" onSubmit={handlerSubmit}>
 
                 <div className="form-group d-flex flex-column">
                     <label>Fecha y hora inicio</label>
