@@ -12,7 +12,7 @@ export const CalendarPage = () => {
 
   const { openDateModal } = useUiStore();
 
-  const { events } = useCalendarStore();
+  const { events, setActiveEvent } = useCalendarStore();
 
   const eventStyleGetter = (event, start, end, isSelected) => {
 
@@ -34,7 +34,7 @@ export const CalendarPage = () => {
   }
 
   const handlerSelect = (e) => {
-    console.log({ click: e })
+    setActiveEvent(e)
   }
 
   const handlerViewChanged = (e) => {

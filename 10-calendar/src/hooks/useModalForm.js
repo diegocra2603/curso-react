@@ -1,5 +1,5 @@
 import { differenceInSeconds } from "date-fns";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css'
 
@@ -9,15 +9,23 @@ export const useModalForm = (initialForm) => {
 
     const [formValues, setFormValues] = useState({ ...initialForm });
 
+    useEffect(() => {
+
+        if (initialForm !== null) {
+            setFormValues({ ...initialForm })
+        }
+
+    }, [initialForm])
+
     const titleClass = useMemo(() => {
 
         if (!formSubmitted) {
             return '';
         }
 
-        return (formValues.titulo.length > 0) ? '' : 'is-invalid'
+        return (formValues.title.length > 0) ? '' : 'is-invalid'
 
-    }, [formValues.titulo, formSubmitted])
+    }, [formValues.title, formSubmitted])
 
     const handlerChange = ({ target }) => {
         setFormValues({
@@ -44,7 +52,7 @@ export const useModalForm = (initialForm) => {
             return;
         }
 
-        if (formValues.titulo.length === 0) {
+        if (formValues.title.length === 0) {
             return;
         }
 
