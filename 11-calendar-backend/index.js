@@ -1,8 +1,6 @@
 const express = require('express');
 require('dotenv').config();
 
-console.log(process.env)
-
 //Crear el servidor de expres
 
 const app = express();
@@ -11,12 +9,8 @@ const app = express();
 app.use(express.static('public'));
 
 //Rutas
-// app.get('/', (req, res) => {
-//     console.log('Se requier el /')
-//     res.json({
-//         ok: true
-//     })
-// })
+app.use('/api/auth', require('./routes/auth'));
+//crud : Eventos
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => {
