@@ -82,7 +82,7 @@ export const CalendarModal = () => {
                         type="text"
                         className={`form-control ${titleClass}`}
                         placeholder="Título del evento"
-                        name="titulo"
+                        name="title"
                         autoComplete="off"
                         value={formValues?.title}
                         onChange={handlerChange}

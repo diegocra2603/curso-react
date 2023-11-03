@@ -1,13 +1,29 @@
-import { differenceInSeconds } from "date-fns";
+import { addHours, differenceInSeconds } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css'
+import { useCalendarStore, useUiStore } from "./";
 
 export const useModalForm = (initialForm) => {
 
-    const [formSubmitted, setFormSubmitted] = useState(false)
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const [formValues, setFormValues] = useState({ ...initialForm });
+    const [formValues, setFormValues] = useState({
+        _id: 0,
+        title: '',
+        notes: '',
+        start: new Date(),
+        end: addHours(new Date(), 2),
+        bgColor: '',
+        user: {
+            _id: 0,
+            name: ''
+        }
+    });
+
+    const { startSavingEvent } = useCalendarStore();
+
+    const { closeDateModal } = useUiStore();
 
     useEffect(() => {
 
@@ -41,7 +57,7 @@ export const useModalForm = (initialForm) => {
         });
     }
 
-    const handlerSubmit = (e) => {
+    const handlerSubmit = async (e) => {
         e.preventDefault();
         setFormSubmitted(true);
 
@@ -56,7 +72,10 @@ export const useModalForm = (initialForm) => {
             return;
         }
 
-        console.log(formValues);
+        await startSavingEvent(formValues)
+
+        closeDateModal();
+        setFormSubmitted(false);
 
         //TODO:
 
