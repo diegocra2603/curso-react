@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { handlerAddNewEvent, handlerSetActiveEvent } from "../store";
+import { handlerAddNewEvent, handlerSetActiveEvent, handlerUpdateEvent } from "../store";
 
 export const useCalendarStore = () => {
 
@@ -16,11 +16,13 @@ export const useCalendarStore = () => {
 
         //Todo bien
         if (calendarEvent._id !== 0) {
-
+            dispatch(handlerUpdateEvent({ ...calendarEvent }));
         } else {
             dispatch(handlerAddNewEvent({ ...calendarEvent, _id: new Date().getTime() }))
         }
     }
+
+
 
     return {
         //Properties
