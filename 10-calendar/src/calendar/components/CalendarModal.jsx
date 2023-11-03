@@ -4,8 +4,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 
-import { useUiStore } from "../../hooks/useUiStore";
-import { useModalForm } from "../../hooks/useModalForm";
+import { useUiStore, useModalForm } from "../../hooks";
 
 registerLocale('es', es)
 
