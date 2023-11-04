@@ -9,17 +9,20 @@ const { check } = require('express-validator');
 const { obtenerEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/events');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
+//Todas tienen que pasar por este midellware
+router.use(validarJWT);
+
 // Obtener Eventos
-router.get('/', validarJWT ,obtenerEventos);
+router.get('/', obtenerEventos);
 
 //Crear Evento
-router.post('/', validarJWT, crearEvento);
+router.post('/', crearEvento);
 
 //Acturalizar Evento
-router.put('/', validarJWT, actualizarEvento);
+router.put('/', actualizarEvento);
 
 //Eliminar Evento
-router.delete('/', validarJWT, eliminarEvento);
+router.delete('/', eliminarEvento);
 
 
 module.exports = router;
