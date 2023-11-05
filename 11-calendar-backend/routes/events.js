@@ -19,14 +19,19 @@ router.get('/', obtenerEventos);
 
 //Crear Evento
 router.post('/', [
-    check('title','El Titulo es obligatorio').not().isEmpty(),
-    check('start','La Fecha de inicio debe de ser correcta').custom(isDate),
-    check('end','La Fecha fin debe de ser correcta').custom(isDate),
+    check('title', 'El Titulo es obligatorio').not().isEmpty(),
+    check('start', 'La Fecha de inicio debe de ser correcta').custom(isDate),
+    check('end', 'La Fecha fin debe de ser correcta').custom(isDate),
     validarCampos
 ], crearEvento);
 
 //Acturalizar Evento
-router.put('/', actualizarEvento);
+router.put('/:eventoId', [
+    check('title', 'El Titulo es obligatorio').not().isEmpty(),
+    check('start', 'La Fecha de inicio debe de ser correcta').custom(isDate),
+    check('end', 'La Fecha fin debe de ser correcta').custom(isDate),
+    validarCampos
+], actualizarEvento);
 
 //Eliminar Evento
 router.delete('/', eliminarEvento);
