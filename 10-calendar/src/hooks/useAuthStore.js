@@ -40,16 +40,40 @@ export const useAuthStore = () => {
 
         } catch (error) {
 
-            // const { response: { data: { errors } } } = error;
+            if (error.response.data.errors) {
+                const { response: { data: { errors } } } = error;
 
-            // Object.keys(errors).forEach(keyError => {
-            //    const message = errors[keyError].msg
-            //    dispatch(handlerLogout(message));
-            // });
-
-               dispatch(handlerLogout(error.response.data?.msg));
+                Object.keys(errors).forEach(keyError => {
+                    const message = errors[keyError].msg
+                    dispatch(handlerLogout(message));
+                });
+            } else {
+                dispatch(handlerLogout(error.response.data?.msg || '---'));
+            }
 
             setTimeout(() => { dispatch(clearErrorMessage()) }, 10)
+        }
+
+    }
+
+    const checkAuthToken = async () => {
+        const token = localStorage.getItem('tokon');
+
+        if (!token) {
+            return dispatch(handlerLogout());
+        }
+
+        try {
+            const { data } = await calendarApi.get('auth/renew');
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().getTime());
+            dispatch(handlerLogin({
+                name: data.name,
+                uid: data.uid
+            }))
+        } catch (error) {
+            localStorage.clear();
+            dispatch(handlerLogout());
         }
 
     }
@@ -63,6 +87,7 @@ export const useAuthStore = () => {
         //* Methods
         startLogin,
         startRegister,
+        checkAuthToken,
     }
 
 }
