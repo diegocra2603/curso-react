@@ -10,16 +10,11 @@ export const FabAddNew = () => {
     const handlerClickNew = () => {
 
         setActiveEvent({
-            _id: 0,
             title: '',
             notes: '',
             start: new Date(),
             end: addHours(new Date(), 2),
-            bgColor: '#fafafa',
-            user: {
-                _id: 1234,
-                name: 'Diego'
-            }
+            bgColor: '#fafafa'
         });
 
         openDateModal();

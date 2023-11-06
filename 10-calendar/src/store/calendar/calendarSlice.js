@@ -7,11 +7,7 @@ const tempEvent = {
     notes: 'Hay que comprar el pastel',
     start: new Date(),
     end: addHours(new Date(), 2),
-    bgColor: '#fafafa',
-    user: {
-        _id: 1234,
-        name: 'Diego'
-    }
+    bgColor: '#fafafa'
 }
 
 export const calendarSlice = createSlice({
